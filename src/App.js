@@ -36,7 +36,7 @@ const App = () => {
   };
 
   React.useEffect(() => {
-    socketRef.current = io(`${process.env.REACT_APP_API_URL}`, {
+    socketRef.current = io(`${process.env.REACT_APP_API_URL || 'http://95.214.63.231:3005/'}`, {
       transports: ['websocket'],
     });
 
@@ -60,11 +60,11 @@ const App = () => {
     socketRef.current.on('role', (role) => {
       dispatch(setRole(role));
     });
-    axios.get(`${process.env.REACT_APP_API_URL}messages`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL || 'local'}messages`).then((res) => {
       dispatch(setChat(res.data));
     });
 
-    axios.get(`${process.env.REACT_APP_API_URL}canvas`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL || 'local'}canvas`).then((res) => {
       setCanvasImage(res.data);
     });
 
