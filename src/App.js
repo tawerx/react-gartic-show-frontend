@@ -36,7 +36,7 @@ const App = () => {
   };
 
   React.useEffect(() => {
-    socketRef.current = io('https://react-gartic-show.herokuapp.com/', {
+    socketRef.current = io(`${process.env.REACT_APP_API_URL}`, {
       transports: ['websocket'],
     });
 
@@ -60,11 +60,11 @@ const App = () => {
     socketRef.current.on('role', (role) => {
       dispatch(setRole(role));
     });
-    axios.get('https://react-gartic-show.herokuapp.com/messages').then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}messages`).then((res) => {
       dispatch(setChat(res.data));
     });
 
-    axios.get('https://react-gartic-show.herokuapp.com/canvas').then((res) => {
+    axios.get(`${process.env.REACT_APP_API_URL}canvas`).then((res) => {
       setCanvasImage(res.data);
     });
 
