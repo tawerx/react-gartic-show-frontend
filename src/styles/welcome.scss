@@ -1,0 +1,18 @@
+.welcome {
+  display: flex;
+  justify-content: center;
+  &-block {
+    background-color: rgba($color: #ad87ff, $alpha: 1);
+    width: 1171px;
+    height: 800px;
+    border-radius: 15px;
+    box-shadow: 10px 10px 4px rgb(0 0 0 / 25%);
+
+    &-text {
+      text-align: center;
+      font-size: 26px;
+      padding: 35px 90px 0px 90px;
+      font-weight: 500;
+    }
+  }
+}
