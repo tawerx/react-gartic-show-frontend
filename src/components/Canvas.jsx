@@ -99,6 +99,9 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
     <div className="canvas">
       <div ref={paintRef} className="canvas-paint">
         <canvas
+          onPointerDown={startDrawing}
+          onPointerMove={draw}
+          onPointerUp={endDrawing}
           onMouseDown={startDrawing}
           onMouseUp={endDrawing}
           onMouseMove={draw}
