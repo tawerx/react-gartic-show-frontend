@@ -124,6 +124,8 @@ const App = () => {
   };
 
   if (isPhone) {
+    document.body.style.position = 'fixed';
+    document.body.style.overflow = 'hidden';
     return (
       <>
         <Canvas
