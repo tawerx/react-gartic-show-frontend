@@ -21,6 +21,7 @@ const App = () => {
   const { gameWord, currentTool, color, role } = useSelector((state) => state.logic);
   const [create, setCreate] = React.useState(false);
   const [canvasImage, setCanvasImage] = React.useState('');
+  const [isPhone, setIsPhone] = React.useState(false);
   const socketRef = React.useRef();
   const canvasRef = React.useRef();
   const onClickCreate = () => {
@@ -32,11 +33,12 @@ const App = () => {
         socketRef.current.emit('setGameWord', gameWord);
       }
       dispatch(setDrawFlag(true));
+      setIsPhone(true);
     }
   };
 
   React.useEffect(() => {
-    socketRef.current = io(`http://95.214.63.231:3005/`, {
+    socketRef.current = io(`http://localhost:3005/`, {
       transports: ['websocket'],
     });
 
@@ -63,11 +65,11 @@ const App = () => {
     socketRef.current.on('role', (role) => {
       dispatch(setRole(role));
     });
-    axios.get(`http://95.214.63.231:3005/messages`).then((res) => {
+    axios.get(`http://localhost:3005/messages`).then((res) => {
       dispatch(setChat(res.data));
     });
 
-    axios.get(`http://95.214.63.231:3005/canvas`).then((res) => {
+    axios.get(`http://localhost:3005/canvas`).then((res) => {
       setCanvasImage(res.data);
     });
 
@@ -76,6 +78,7 @@ const App = () => {
       dispatch(setDrawFlag(false));
       dispatch(setGameWord(''));
       setCreate(false);
+      setIsPhone(false);
     });
     socketRef.current.on('getMessage', (msg) => {
       dispatch(setMessages(msg));
@@ -120,6 +123,19 @@ const App = () => {
     }
   };
 
+  if (isPhone) {
+    return (
+      <>
+        <Canvas
+          paint={painting}
+          ctxImg={canvasImg}
+          clear={clearCanvas}
+          onInit={(canvasCtx) => (canvasRef.current = canvasCtx)}
+        />
+      </>
+    );
+  }
+
   return (
     <div className="app">
       <Header />
@@ -131,7 +147,9 @@ const App = () => {
             <div className="create-word">
               {create == false ? (
                 <input
-                  onChange={(e) => dispatch(setGameWord(e.target.value))}
+                  onChange={(e) => {
+                    dispatch(setGameWord(e.target.value));
+                  }}
                   value={gameWord}
                   placeholder="Введите слово"
                 />

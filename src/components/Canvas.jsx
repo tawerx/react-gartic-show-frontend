@@ -17,10 +17,6 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
     context.lineCap = 'round';
     contextRef.current = context;
     onInit(context);
-
-    // if (window.screen.width <= 1260) {
-    //   canvasRef.current.width = 600;
-    // }
   }, []);
 
   React.useEffect(() => {
@@ -33,10 +29,10 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
       } else if (window.screen.width < 850) {
         if (paintRef.current) {
           paintRef.current.style.width = '100vw';
-          paintRef.current.style.height = '360px';
+          paintRef.current.style.height = '310px';
           if (canvasRef.current) {
             canvasRef.current.width = window.screen.width;
-            canvasRef.current.height = 360;
+            canvasRef.current.height = 310;
           }
         }
       }
