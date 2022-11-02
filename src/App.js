@@ -136,6 +136,9 @@ const App = () => {
         />
       </>
     );
+  } else {
+  document.body.style.position = 'static';
+    document.body.style.overflow = 'auto';
   }
 
   return (
