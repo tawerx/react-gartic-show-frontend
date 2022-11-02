@@ -40,9 +40,7 @@ const App = () => {
       transports: ['websocket'],
     });
 
-    if (localStorage.nick == undefined) {
-      localStorage.setItem('nick', prompt('Введите nickname'));
-    }
+    localStorage.setItem('nick', prompt('Введите nickname'));
     socketRef.current.emit('nickname', localStorage.nick);
 
     socketRef.current.on('canvasImg', (data) => {

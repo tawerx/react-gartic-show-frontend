@@ -32,6 +32,9 @@
       &:hover {
         border: 1px solid rgba($color: #000000, $alpha: 0.55);
       }
+      @media (max-width: 1050px) {
+        width: 80%;
+      }
     }
     button {
       cursor: pointer;
@@ -43,6 +46,23 @@
       &:hover {
         border: 1px solid rgba($color: #000000, $alpha: 0.55);
       }
+      @media (max-width: 1050px) {
+        width: 45%;
+      }
     }
+  }
+
+  @media (max-width: 1750px) {
+    height: 230px;
+  }
+
+  @media (max-width: 1320px) {
+    width: 30vw;
+  }
+  @media (max-width: 650px) {
+    width: 95%;
+  }
+  @media (max-width: 500px) {
+    width: 100%;
   }
 }

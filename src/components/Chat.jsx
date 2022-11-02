@@ -11,28 +11,33 @@ const Chat = ({ send }) => {
     <div className="chat">
       <div className="chat-messages">
         <ul>
-          {chat.map((message) => {
-            return <li key={message}>{`${message}`}</li>;
+          {chat.map((message, i) => {
+            return <li key={i}>{`${message}`}</li>;
           })}
         </ul>
       </div>
-      {role == 'writer' ? null : (
-        <div className="chat-control">
-          <input
-            onChange={(e) => setValue(e.target.value)}
-            value={value}
-            placeholder="Введите сообщение"
-          />
-          <button
-            onClick={() => {
+      <div className="chat-control">
+        <input
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key == 'Enter') {
               send(`${localStorage.nick}: ${value}`);
               setValue('');
               dispatch(setMessages(`${localStorage.nick}: ${value}`));
-            }}>
-            Отправить
-          </button>
-        </div>
-      )}
+            }
+          }}
+          value={value}
+          placeholder="Введите сообщение"
+        />
+        <button
+          onClick={() => {
+            send(`${localStorage.nick}: ${value}`);
+            setValue('');
+            dispatch(setMessages(`${localStorage.nick}: ${value}`));
+          }}>
+          Отправить
+        </button>
+      </div>
     </div>
   );
 };

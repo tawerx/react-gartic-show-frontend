@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTool, setColor } from '../redux/slices/logicSlice';
+import { setColor, setTool } from '../redux/slices/logicSlice';
 
 const Canvas = ({ paint, onInit, clear, ctxImg }) => {
   const { currentTool, color, role, drawFlag } = useSelector((state) => state.logic);
@@ -8,6 +8,7 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
 
   const canvasRef = React.useRef();
   const contextRef = React.useRef();
+  const paintRef = React.useRef();
   const [isDrawing, setIsDrawing] = React.useState(false);
 
   React.useEffect(() => {
@@ -16,7 +17,36 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
     context.lineCap = 'round';
     contextRef.current = context;
     onInit(context);
+
+    // if (window.screen.width <= 1260) {
+    //   canvasRef.current.width = 600;
+    // }
   }, []);
+
+  React.useEffect(() => {
+    if (role == 'writer') {
+      if (window.screen.width > 850 && window.screen.width < 1260) {
+        if (canvasRef.current) {
+          canvasRef.current.width = 800;
+          canvasRef.current.height = 500;
+        }
+      } else if (window.screen.width < 850) {
+        if (paintRef.current) {
+          paintRef.current.style.width = '100vw';
+          paintRef.current.style.height = '360px';
+          if (canvasRef.current) {
+            canvasRef.current.width = window.screen.width;
+            canvasRef.current.height = 360;
+          }
+        }
+      }
+    } else {
+      if (canvasRef.current) {
+        canvasRef.current.width = 1171;
+        canvasRef.current.height = 800;
+      }
+    }
+  }, [role]);
 
   const startDrawing = (e) => {
     if (drawFlag) {
@@ -67,7 +97,7 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
 
   return (
     <div className="canvas">
-      <div className="canvas-paint">
+      <div ref={paintRef} className="canvas-paint">
         <canvas
           onMouseDown={startDrawing}
           onMouseUp={endDrawing}

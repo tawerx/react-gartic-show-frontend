@@ -12,14 +12,15 @@
   font-family: 'Nunito', Roboto, system-ui, Tahoma, sans-serif;
 }
 
-.app {
-  height: 100vh;
-  max-height: 100vh;
-  width: 100vw;
+body {
   background-color: $background-color;
+}
+
+.app {
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 15px;
 }
 
 .create-word {
@@ -44,6 +45,9 @@
     font-weight: 500;
     font-size: 20px;
     letter-spacing: 2px;
+    @media (max-width: 1050px) {
+      width: 80%;
+    }
   }
   input {
     width: 250px;
@@ -56,12 +60,30 @@
     &::placeholder {
       text-align: center;
     }
+
+    @media (max-width: 1050px) {
+      width: 80%;
+    }
   }
 
   p {
     font-size: 25px;
     font-weight: 500;
     letter-spacing: 2px;
+  }
+
+  @media (max-width: 1750px) {
+    height: 230px;
+  }
+
+  @media (max-width: 1320px) {
+    width: 30vw;
+  }
+  @media (max-width: 650px) {
+    width: 100%;
+  }
+  @media (max-width: 500px) {
+    width: 100%;
   }
 }
 
@@ -70,10 +92,29 @@
   flex-direction: row;
   justify-content: center;
   gap: 60px;
+
+  @media (max-width: 1750px) {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 10px;
+  }
 }
 
 .leftSide {
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  @media (max-width: 1750px) {
+    flex-direction: row;
+  }
+  @media (max-width: 650px) {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 2px;
+  }
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
