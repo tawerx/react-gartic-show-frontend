@@ -40,7 +40,7 @@ const App = () => {
   };
 
   React.useEffect(() => {
-    socketRef.current = io(`http://localhost:3005/`, {
+    socketRef.current = io(`http://95.214.63.231:3005/`, {
       transports: ['websocket'],
     });
 
@@ -67,11 +67,11 @@ const App = () => {
     socketRef.current.on('role', (role) => {
       dispatch(setRole(role));
     });
-    axios.get(`http://localhost:3005/messages`).then((res) => {
+    axios.get(`http://95.214.63.231:3005/messages`).then((res) => {
       dispatch(setChat(res.data));
     });
 
-    axios.get(`http://localhost:3005/canvas`).then((res) => {
+    axios.get(`http://95.214.63.231:3005/canvas`).then((res) => {
       setCanvasImage(res.data);
     });
 
@@ -131,6 +131,8 @@ const App = () => {
     }
   };
   if (isPhone) {
+    document.body.style.position = 'fixed';
+    document.body.style.overflow = 'hidden';
     return (
       <>
         <Canvas
@@ -143,6 +145,9 @@ const App = () => {
         <Chat send={sendMessage} />
       </>
     );
+  } else {
+  document.body.style.position = 'static';
+    document.body.style.overflow = 'auto';
   }
 
   return (
