@@ -33,7 +33,9 @@ const App = () => {
         socketRef.current.emit('setGameWord', gameWord);
       }
       dispatch(setDrawFlag(true));
-      setIsPhone(true);
+      if (window.screen.width < 500) {
+        setIsPhone(true);
+      }
     }
   };
 
@@ -73,8 +75,8 @@ const App = () => {
       setCanvasImage(res.data);
     });
 
-    socketRef.current.on('endGame', ({ nick, message }) => {
-      alert(`${nick} ${message}`);
+    socketRef.current.on('endGame', (data) => {
+      alert(data);
       dispatch(setDrawFlag(false));
       dispatch(setGameWord(''));
       setCreate(false);
@@ -123,6 +125,11 @@ const App = () => {
     }
   };
 
+  const afkWriter = () => {
+    if (socketRef.current) {
+      socketRef.current.emit('afkWriter');
+    }
+  };
   if (isPhone) {
     return (
       <>
@@ -130,8 +137,10 @@ const App = () => {
           paint={painting}
           ctxImg={canvasImg}
           clear={clearCanvas}
+          afk={afkWriter}
           onInit={(canvasCtx) => (canvasRef.current = canvasCtx)}
         />
+        <Chat send={sendMessage} />
       </>
     );
   }
@@ -166,6 +175,7 @@ const App = () => {
             paint={painting}
             ctxImg={canvasImg}
             clear={clearCanvas}
+            afk={afkWriter}
             onInit={(canvasCtx) => (canvasRef.current = canvasCtx)}
           />
         </div>

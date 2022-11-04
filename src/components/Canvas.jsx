@@ -1,15 +1,26 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setColor, setTool } from '../redux/slices/logicSlice';
+import { useIdleTimer } from 'react-idle-timer';
 
-const Canvas = ({ paint, onInit, clear, ctxImg }) => {
-  const { currentTool, color, role, drawFlag } = useSelector((state) => state.logic);
+const Canvas = ({ paint, onInit, clear, afk, ctxImg }) => {
+  const { currentTool, color, role, drawFlag, afkTimer } = useSelector((state) => state.logic);
   const dispatch = useDispatch();
-
   const canvasRef = React.useRef();
   const contextRef = React.useRef();
   const paintRef = React.useRef();
   const [isDrawing, setIsDrawing] = React.useState(false);
+
+  const handleOnIdle = () => {
+    if (role == 'writer') {
+      console.log('бездействует рисующий');
+      afk();
+      reset();
+    } else {
+      console.log('бездействует юзер');
+      reset();
+    }
+  };
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -91,6 +102,11 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
     clear('Очищено');
   };
 
+  const { reset } = useIdleTimer({
+    timeout: 30 * 1000,
+    onIdle: handleOnIdle,
+    onActive: draw,
+  });
   return (
     <div className="canvas">
       <div ref={paintRef} className="canvas-paint">
@@ -98,9 +114,9 @@ const Canvas = ({ paint, onInit, clear, ctxImg }) => {
           onPointerDown={startDrawing}
           onPointerMove={draw}
           onPointerUp={endDrawing}
-          onMouseDown={startDrawing}
-          onMouseUp={endDrawing}
-          onMouseMove={draw}
+          // onMouseDown={startDrawing}
+          // onMouseUp={endDrawing}
+          // onMouseMove={draw}
           ref={canvasRef}
           width={1171}
           height={800}

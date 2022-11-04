@@ -115,6 +115,6 @@ body {
   }
   @media (max-width: 500px) {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 }
