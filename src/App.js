@@ -40,7 +40,7 @@ const App = () => {
   };
 
   React.useEffect(() => {
-    socketRef.current = io(`http://95.214.63.231:3005/`, {
+    socketRef.current = io(`http://95.214.63.231:80/`, {
       transports: ['websocket'],
     });
 
@@ -67,11 +67,11 @@ const App = () => {
     socketRef.current.on('role', (role) => {
       dispatch(setRole(role));
     });
-    axios.get(`http://95.214.63.231:3005/messages`).then((res) => {
+    axios.get(`http://95.214.63.231:80/messages`).then((res) => {
       dispatch(setChat(res.data));
     });
 
-    axios.get(`http://95.214.63.231:3005/canvas`).then((res) => {
+    axios.get(`http://95.214.63.231:80/canvas`).then((res) => {
       setCanvasImage(res.data);
     });
 
